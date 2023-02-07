@@ -6,12 +6,8 @@ module.exports = {
 	name: Events.InteractionCreate,
 	once: false,
 	async execute(interaction) {
-		if (!interaction.isButton() || !(interaction.channelId == SalonPsy)) return;
-		if (interaction.customId == "primary") {
-
+		if (!interaction.isButton() || !(interaction.customId == "psybutton")) return;
 			await interaction.showModal(modal)
 			return console.log(interaction);
-		}
-		interaction.message.edit({ embeds: [embed], components: [] });
 	}
 }

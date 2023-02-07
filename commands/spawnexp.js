@@ -8,7 +8,7 @@ module.exports = {
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
-				.setCustomId('primary')
+				.setCustomId('expbutton')
 				.setLabel('📩 Envoyer une demande')
 				.setStyle(ButtonStyle.Primary),
 			);
