@@ -8,9 +8,7 @@ module.exports = {
 	once: false,
 	async execute(interaction) {
 		if (!interaction.isButton() || !(interaction.channelId == SalonExpérience)) return;
-		if (interaction.customId == "primary") {
-			return await interaction.showModal(modal);
-		}
+		if (interaction.customId == "expbutton") {return await interaction.showModal(modal);}
 		if (!interaction.member.roles.cache.some(role => role.id == Superviseur)) return interaction.reply({ content: NotAllowed, ephemeral: true})
 
 		const embed = EmbedBuilder.from(interaction.message.embeds[0]).spliceFields(-1, 1)
