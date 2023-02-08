@@ -1,6 +1,7 @@
 const { Events, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
 const { modal } = require("../modals/experience.js")
-const { Superviseur, SalonExpérience } = require("../json/config.json")
+const Superviseur = process.env.Superviseur
+const SalonExpérience = process.env.SalonExperience
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json")
 const { menuderefus } = require("../SelectMenu/Experience")
 module.exports = {

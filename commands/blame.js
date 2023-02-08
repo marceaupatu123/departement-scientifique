@@ -1,7 +1,9 @@
+require("dotenv").config()
 const {ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder } = require('discord.js');
 const { modal } = require("../modals/blame")
-const { SalonBlamelogs, Superviseur, Delais } = require("../json/config.json")
-const { Allowed, NotAllowed } = require("../json/messages.json")
+const SalonBlamelogs = process.env.SalonBlamelogs
+const Superviseur = process.env.Superviseur
+const { Allowed, NotAllowed, Delais } = require("../json/messages.json")
 
 module.exports = {
     data: new ContextMenuCommandBuilder()

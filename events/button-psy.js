@@ -1,6 +1,7 @@
+require("dotenv").config()
 const { Events, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder } = require('discord.js');
 const { modal } = require("../modals/psy.js")
-const { SalonPsy } = require("../json/config.json")
+const SalonPsy = process.env.SalonPsy
 
 module.exports = {
 	name: Events.InteractionCreate,
