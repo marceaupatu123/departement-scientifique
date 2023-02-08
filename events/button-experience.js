@@ -2,13 +2,14 @@ const { Events, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle
 const { modal } = require("../modals/experience.js")
 const Superviseur = process.env.Superviseur
 const SalonExpérience = process.env.SalonExperience
+const SalonExperienceValide = process.env.SalonExperienceValide
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json")
 const { menuderefus } = require("../SelectMenu/Experience")
 module.exports = {
 	name: Events.InteractionCreate,
 	once: false,
 	async execute(interaction) {
-		if (!interaction.isButton() || !(interaction.channelId == SalonExpérience)) return;
+		if (!interaction.isButton() || !(interaction.channelId == SalonExpérience || interaction.channelId == SalonExperienceValide)) return;
 		if (interaction.customId == "expbutton") {return await interaction.showModal(modal);}
 		if (!interaction.member.roles.cache.some(role => role.id == Superviseur)) return interaction.reply({ content: NotAllowed, ephemeral: true})
 
@@ -24,6 +25,6 @@ module.exports = {
 		    embed.addFields({ name: "📁 | Informations sur la demande", value: `**Statut:** ❌ | Refusé\n **Opérateur:** ${interaction.member}\n **Raison:** ${Raison}`, inline: false })
 			menuinteraction.reply({ content: Allowed, ephemeral: true })
 		}
-		interaction.message.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('primary').setLabel('📩 Envoyer une demande').setStyle(ButtonStyle.Primary),)] });
+		//interaction.message.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('expbutton').setLabel('📩 Envoyer une demande').setStyle(ButtonStyle.Primary),)] });
 	}
 }

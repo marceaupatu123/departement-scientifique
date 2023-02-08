@@ -1,7 +1,9 @@
 require("dotenv").config()
 const { Events, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
 const { modal } = require("../modals/experience.js")
-const { menuderefus } = require("../SelectMenu/Experience")
+const { Allowed } = require("../json/messages.json")
+const SalonExperienceValide = process.env.SalonExperienceValide
+
 module.exports = {
 	name: Events.InteractionCreate,
 	once: false,
@@ -25,11 +27,11 @@ module.exports = {
 				.setTitle('Demande d\'Experience')
 				.setThumbnail('https://cdn-icons-png.flaticon.com/512/123/123793.png')
 				.addFields(
-					{ name: '📋 | Informations sur le Scientifique', value: "**Nom:** " + modalinteraction.fields.getTextInputValue('nom') + "\n**Grade:** " + modalinteraction.fields.getTextInputValue('grade'), inline: true },
+					{ name: '📋 | Informations sur le Scientifique', value: `**Nom:** ${modalinteraction.user}` + "\n**Grade:** " + modalinteraction.fields.getTextInputValue('grade'), inline: true },
 					{ name: '🧪 | Description de l\'Experience', value: "**SCP:** " + modalinteraction.fields.getTextInputValue('scp') + "\n**Unité et Matériel:** " + modalinteraction.fields.getTextInputValue('unité') + "\n**But:** " + modalinteraction.fields.getTextInputValue('but'), inline: false },
 					{ name: "📁 | Informations sur la demande", value: "**Statut:** ⚠️ | En Attente de Validation", inline: false }
 				)
-
-		await modalinteraction.reply({ content: '', ephemeral: false, embeds: [embed], components: [row] });
+		await modalinteraction.guild.channels.cache.get(SalonExperienceValide).send({ content: '', ephemeral: false, embeds: [embed], components: [row] });
+		await modalinteraction.reply({ content: Allowed, ephemeral: true })
     }
 }
