@@ -22,11 +22,13 @@ const scp = new TextInputBuilder()
 const ut = new TextInputBuilder()
     .setCustomId('unité')
     .setLabel("Unité et Matériel")
+    .setMaxLength(200)
     .setStyle(TextInputStyle.Paragraph);
 
 const but = new TextInputBuilder()
     .setCustomId('but')
     .setLabel("But")
+    .setMaxLength(600)
     .setStyle(TextInputStyle.Paragraph);
 
 

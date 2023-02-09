@@ -1,0 +1,5 @@
+runtime: nodejs18 # or another supported version
+
+handlers:
+- url: /departement-scientifique
+  script: auto
