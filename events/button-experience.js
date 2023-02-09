@@ -33,7 +33,7 @@ module.exports = {
 			menuinteraction.reply({ content: Allowed, ephemeral: true })
 		}
 		embed = embed.spliceFields(-2, 1)
-		interaction.message.edit({ embeds: [embed], components: [EnabledButtons] });
+		interaction.message.edit({ content: ``,embeds: [embed], components: [EnabledButtons] });
 		//interaction.message.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('expbutton').setLabel('📩 Envoyer une demande').setStyle(ButtonStyle.Primary),)] });
 	}
 }

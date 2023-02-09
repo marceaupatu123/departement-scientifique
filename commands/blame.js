@@ -1,7 +1,7 @@
 require("dotenv").config()
 const {ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder } = require('discord.js');
 const { modal } = require("../modals/blame")
-const SalonBlamelogs = process.env.SalonBlamelogs
+const SalonBlamelogs = process.env.SalonBlamelogs, SalonBlame = process.env.SalonBlame
 const Superviseur = process.env.Superviseur
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json")
 
@@ -34,6 +34,7 @@ module.exports = {
 				)
                 .setDescription(`Vous avez reçu un nouveau blâme, veuillez faire attention à l'avenir.\nVous avez désormais un total de **${keys}** blâme(s) actif(s).`)
         user.send({content: '', ephemeral: false, embeds: [embed]})
+        modalinteraction.guild.channels.cache.get(SalonBlame).send({content: '', ephemeral: false, embeds: [embed]})
         modalinteraction.reply({content: Allowed, ephemeral: true})
 	},
 }
