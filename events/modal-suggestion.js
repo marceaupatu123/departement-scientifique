@@ -1,6 +1,7 @@
 require("dotenv").config()
-const { Events, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 const { modal } = require("../modals/suggestion.js")
+const { Allowed } = require("../json/messages.json")
 module.exports = {
 	name: Events.InteractionCreate,
 	once: false,
@@ -15,6 +16,6 @@ module.exports = {
 				.setDescription(modalinteraction.fields.getTextInputValue("descriptionsuggestion"))
 		
 		await channel.send({ content: '', ephemeral: false, embeds: [embed]});
-		await modalinteraction.reply({ content: '', ephemeral: false});
+		await modalinteraction.reply({ content: Allowed, ephemeral: false});
     }
 }
