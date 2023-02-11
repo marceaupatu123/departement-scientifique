@@ -7,6 +7,7 @@ const modal = new ModalBuilder()
 const raison = new TextInputBuilder()
     .setCustomId('descriptionsuggestion')
     .setLabel("Descrpiton de la Suggestion")
+    .setMaxLength(900)
     .setStyle(TextInputStyle.Paragraph);
 
 modal.addComponents(new ActionRowBuilder().addComponents(raison))

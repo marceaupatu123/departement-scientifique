@@ -16,6 +16,6 @@ module.exports = {
 				.setDescription(modalinteraction.fields.getTextInputValue("descriptionsuggestion"))
 		
 		await channel.send({ content: '', ephemeral: false, embeds: [embed]});
-		await modalinteraction.reply({ content: Allowed, ephemeral: false});
+		await modalinteraction.reply({ content: Allowed, ephemeral: true});
     }
 }

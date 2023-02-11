@@ -7,6 +7,7 @@ const modal = new ModalBuilder()
 const raison = new TextInputBuilder()
     .setCustomId('raison')
     .setLabel("Raison")
+    .setMaxLength(900)
     .setStyle(TextInputStyle.Paragraph);
 
 modal.addComponents(new ActionRowBuilder().addComponents(raison))
