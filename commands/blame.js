@@ -45,8 +45,7 @@ module.exports = {
             .addFields(
                 { name: "📁 | Informations sur le blame", value: `**ID**: ${blameid}\n**Superviseur:** ${interaction.user}\n **Raison:** ${modalinteraction.fields.getTextInputValue('raison')}`, inline: false }
             )
-            .setDescription(`Vous avez reçu un nouveau blâme, veuillez faire attention à l'avenir.\nVous avez désormais un blâme **${keys}**`)
-        user.send({ content: '', ephemeral: false, embeds: [embed] })
+            .setDescription(`${user} à reçu un nouveau blâme, il a désormais un blâme **${keys}**`)
         const row = new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('enlevecettemerde').setLabel('🗑️ Supprimer le blâme').setStyle(ButtonStyle.Danger));
         modalinteraction.guild.channels.cache.get(SalonBlame).send({ content: '', ephemeral: false, embeds: [embed], components: [row] })
         modalinteraction.reply({ content: Allowed, ephemeral: true })
