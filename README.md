@@ -7,3 +7,6 @@
 [Département Scientiifuqe](https://discord.gg/jzc7kjdH5k) est un bot discord créé par @marceaupatu123, dans le but d'améliorer le serveur discord du département scientifique du serveur [SCP-RP Cosmos](https://discord.gg/scpcosmos).
 
 
+<a href="https://github.com/OWNER/REPO/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=OWNER/REPO" />
+</a>
