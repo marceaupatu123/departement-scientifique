@@ -49,7 +49,7 @@ module.exports = {
       }|${modalinteraction.fields.getTextInputValue("raison")}`
     );
     const array = await botlog.messages.fetch();
-    let keys = 0;  
+    let keys = 0;
     array.forEach((element) => {
       const split = element.content.split("|");
       const wow = split[1].search(`${user}`);
@@ -63,10 +63,9 @@ module.exports = {
         name: "📁 | Informations sur le blame",
 
         value: `**ID**: ${blameid}\n**Superviseur:** ${
-          interaction.user  
+          interaction.user
         }\n **Raison:** ${modalinteraction.fields.getTextInputValue("raison")}`,
-        inline: 
-        false,
+        inline: false,
       })
       .setDescription(
         `${user} à reçu un nouveau blâme, il a désormais un blâme **${keys}**`
