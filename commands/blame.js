@@ -31,7 +31,7 @@ module.exports = {
     .setName("Mettre un blâme")
     .setType(ApplicationCommandType.User),
   async execute(interaction) {
-    if (!interaction.member.roles.cache.some((role) => role.id == Superviseur))
+    if (!interaction.member.roles.cache.some((role) => role.id === Superviseur))
       return interaction.reply({ content: NotAllowed, ephemeral: true });
     const user = interaction.targetUser;
     const botlog = interaction.guild.channels.cache.get(SalonBlamelogs);
