@@ -4,6 +4,7 @@ const Superviseur = process.env.Superviseur
 const SalonExpérience = process.env.SalonExperience, SalonExperienceValide = process.env.SalonExperienceValide
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json")
 const { menuderefus } = require("../SelectMenu/Experience")
+const { split } = require("../functions/database")
 const DisabledButtons = new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('✅ Autoriser').setCustomId('success').setStyle(ButtonStyle.Success).setDisabled(true),).addComponents(new ButtonBuilder().setCustomId('denied').setLabel('🗑️ Refuser').setDisabled(true).setStyle(ButtonStyle.Danger),);
 const EnabledButtons = new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('✅ Autoriser').setCustomId('success').setStyle(ButtonStyle.Success).setDisabled(false),).addComponents(new ButtonBuilder().setCustomId('denied').setLabel('🗑️ Refuser').setDisabled(false).setStyle(ButtonStyle.Danger),);
 
@@ -33,7 +34,8 @@ module.exports = {
 			menuinteraction.reply({ content: Allowed, ephemeral: true })
 		}
 		embed = embed.spliceFields(-2, 1)
-		interaction.message.edit({ content: ``,embeds: [embed], components: [EnabledButtons] });
+		const embedfields = split(interaction.message.embeds[0].fields[0].value)
+		interaction.message.edit({ content: `${embedfields["Nom"]}`,embeds: [embed], components: [EnabledButtons] });
 		//interaction.message.edit({ embeds: [embed], components: [new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('expbutton').setLabel('📩 Envoyer une demande').setStyle(ButtonStyle.Primary),)] });
 	}
 }

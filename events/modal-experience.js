@@ -2,6 +2,7 @@ require("dotenv").config()
 const { Events, ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
 const { Allowed } = require("../json/messages.json")
 const SalonExperienceValide = process.env.SalonExperienceValide, Superviseur = process.env.Superviseur
+const { split } = require("../functions/database")
 const axios = require('axios');
 module.exports = {
 	name: Events.InteractionCreate,
@@ -34,7 +35,7 @@ module.exports = {
 				{ name: '🧪 | Description de l\'Experience', value: "**SCP:** " + modalinteraction.fields.getTextInputValue('scp') + "\n**Unité et Matériel:** " + modalinteraction.fields.getTextInputValue('unité') + "\n**But:** " + modalinteraction.fields.getTextInputValue('but'), inline: false },
 				{ name: "📁 | Informations sur la demande", value: "**Statut:** ⚠️ | En Attente de Validation", inline: false }
 			)
-		await modalinteraction.guild.channels.cache.get(SalonExperienceValide).send({ content: `<@&${Superviseur}>`, ephemeral: false, embeds: [embed], components: [row] });
+		await modalinteraction.guild.channels.cache.get(SalonExperienceValide).send({ content: `<@&${Superviseur}>${modalinteraction.member}`, ephemeral: false, embeds: [embed], components: [row] });
 		await modalinteraction.editReply({ content: Allowed, ephemeral: true })
 	}
 }
