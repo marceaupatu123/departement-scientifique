@@ -64,7 +64,8 @@ module.exports = {
         value: `**ID**: ${blameid}\n**Superviseur:** ${
           interaction.user
         }\n **Raison:** ${modalinteraction.fields.getTextInputValue("raison")}`,
-        inline: false,
+        inline: 
+        false,
       })
       .setDescription(
         `${user} à reçu un nouveau blâme, il a désormais un blâme **${keys}**`
