@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 require("dotenv").config();
 const {
   Events,
@@ -6,11 +7,9 @@ const {
   EmbedBuilder,
   ButtonStyle,
 } = require("discord.js");
-const { modal } = require("../modals/suggestion.js");
-const { Allowed } = require("../json/messages.json");
+const { Allowed, NotAllowed } = require("../json/messages.json");
 
 const { SalonBlamelogs } = process.env;
-const { SalonBlame } = process.env;
 const { Superviseur } = process.env;
 const { split } = require("../functions/database");
 
@@ -26,12 +25,9 @@ module.exports = {
   name: Events.InteractionCreate,
   once: false,
   async execute(button) {
-    if (
-      !button.isButton() ||
-      !(button.customId == "enlevecettemerde") ||
-      !button.member.roles.cache.some((role) => role.id == Superviseur)
-    )
-      return;
+    if (!button.isButton() || !(button.customId === "enlevecettemerde")) return;
+    if (!button.member.roles.cache.some((role) => role.id === Superviseur))
+      return button.reply(NotAllowed);
     const botlog = button.guild.channels.cache.get(SalonBlamelogs);
     const array = await botlog.messages.fetch();
     const { value } = button.message.embeds[0].fields[0];
