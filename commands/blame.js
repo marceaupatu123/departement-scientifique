@@ -62,7 +62,7 @@ module.exports = {
       .addFields({
         name: "📁 | Informations sur le blame",
         value: `**ID**: ${blameid}\n**Superviseur:** ${
-          interaction.user
+          interaction.user  
         }\n **Raison:** ${modalinteraction.fields.getTextInputValue("raison")}`,
         inline: 
         false,
