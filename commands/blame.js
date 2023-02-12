@@ -49,7 +49,7 @@ module.exports = {
       }|${modalinteraction.fields.getTextInputValue("raison")}`
     );
     const array = await botlog.messages.fetch();
-    let keys = 0;
+    let keys = 0;  
     array.forEach((element) => {
       const split = element.content.split("|");
       const wow = split[1].search(`${user}`);
@@ -61,7 +61,7 @@ module.exports = {
       .setThumbnail("https://cdn-icons-png.flaticon.com/512/1022/1022300.png")
       .addFields({
         name: "📁 | Informations sur le blame",
-        
+
         value: `**ID**: ${blameid}\n**Superviseur:** ${
           interaction.user  
         }\n **Raison:** ${modalinteraction.fields.getTextInputValue("raison")}`,
