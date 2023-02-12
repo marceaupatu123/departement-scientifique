@@ -61,8 +61,9 @@ module.exports = {
       .setThumbnail("https://cdn-icons-png.flaticon.com/512/1022/1022300.png")
       .addFields({
         name: "📁 | Informations sur le blame",
+        
         value: `**ID**: ${blameid}\n**Superviseur:** ${
-          interaction.user
+          interaction.user  
         }\n **Raison:** ${modalinteraction.fields.getTextInputValue("raison")}`,
         inline: 
         false,
