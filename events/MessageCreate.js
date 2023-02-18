@@ -17,11 +17,12 @@ module.exports = {
     );
     if (mentioned) {
       const infos = mentioned.content.split("|");
-      message.reply(
-        `${mentioned.mentions.members.first()} est absent depuis le <t:${
+      message.reply({
+        content: `${mentioned.mentions.members.first()} est absent depuis le <t:${
           infos[1]
-        }:D> jusqu'au <t:${infos[2]}:D>.`
-      );
+        }:D> jusqu'au <t:${infos[2]}:D>.`,
+        ephemeral: true,
+      });
     }
   },
 };
