@@ -37,7 +37,20 @@ module.exports = {
           .setCustomId("setupsuggestions")
           .setLabel("💟 Setup Suggestions")
           .setStyle(ButtonStyle.Primary)
+      )
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId("page2")
+          .setLabel("⏩ Page 2")
+          .setStyle(ButtonStyle.Primary)
       );
+
+    const SecondButton = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+        .setCustomId("setupabsences")
+        .setLabel("🥥 Setup Abscences")
+        .setStyle(ButtonStyle.Primary)
+    );
 
     const ConfigEmbed = new EmbedBuilder()
       .setColor("#91ff00")
@@ -54,9 +67,27 @@ module.exports = {
       embeds: [ConfigEmbed],
       components: [FirstButton],
     });
-    const button = await reply.awaitMessageComponent({ time: 60000 });
+    let button = await reply.awaitMessageComponent({ time: 60000 });
     let row = null;
     let embed = null;
+    let pagechosen = null;
+    /**
+     * SETUP DES BOUTTONS PAGES
+     */
+    if (button.customId === "page2") {
+      button.update({
+        content: "",
+        embeds: [ConfigEmbed],
+        components: [SecondButton],
+      });
+      pagechosen = true;
+    }
+    if (pagechosen) {
+      button = await reply.awaitMessageComponent({ time: 60000 });
+    }
+    /**
+     * SETUP DES BOUTTONS UTILISATEURS
+     */
     if (button.customId === "setupconseil") {
       row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
@@ -117,8 +148,23 @@ module.exports = {
         .setDescription(
           "Cliquez sur le bouton ci-dessous pour proposer une suggestion pour le robot discord.\nTout abus sera sanctionné."
         );
+    } else if (button.customId === "setupabsences") {
+      row = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId("absence")
+          .setLabel("🥥 Déclarer une absence")
+          .setStyle(ButtonStyle.Primary)
+      );
+
+      embed = new EmbedBuilder()
+        .setColor("#0e1e8a")
+        .setTitle("🌴 | Formulaire d'absences")
+        .setThumbnail("https://cdn-icons-png.flaticon.com/512/6581/6581528.png")
+        .setDescription(
+          "Cliquez sur le bouton ci-dessous pour proposer devenir absent."
+        );
     }
-    button.reply({
+    return button.reply({
       content: "",
       ephemeral: false,
       embeds: [embed],

@@ -13,5 +13,6 @@ module.exports = {
   },
   rules: {
     "prettier/prettier": "error",
+    "no-nested-ternary": "off",
   },
 };
