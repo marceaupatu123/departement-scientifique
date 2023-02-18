@@ -15,8 +15,8 @@ module.exports = {
         logs.mentions.members.first()?.id ===
         message.mentions.members.first()?.id
     );
-    const infos = mentioned.content.split("|");
     if (mentioned) {
+      const infos = mentioned.content.split("|");
       message.reply(
         `${mentioned.mentions.members.first()} est absent depuis le <t:${
           infos[1]
