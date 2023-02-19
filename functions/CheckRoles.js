@@ -1,6 +1,6 @@
 /**
  * Renvoie un booléen pour savoir si c'est un superviseur, cette fonction valide automatiquement Dominus_Marceau pour tout tests et maintenances.
- * @param {string} message
+ * @param {GuildMember} member
  * @typedefs {Object<string>}
  */
 function CheckSuperviseur(member) {

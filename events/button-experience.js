@@ -49,7 +49,7 @@ module.exports = {
   once: false,
   async execute(interaction) {
     if (
-      !interaction.isButton() &&
+      !interaction.isButton() ||
       !(
         interaction.channelId === SalonExpérience ||
         interaction.channelId === SalonExperienceValide
