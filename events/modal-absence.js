@@ -3,7 +3,7 @@ const { Events } = require("discord.js");
 const { modal } = require("../modals/absence");
 const { Allowed } = require("../json/messages.json");
 
-const { SalonAbsenceLogs } = process.env;
+const { SalonAbsenceLogs, RoleAbsent } = process.env;
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -45,9 +45,7 @@ module.exports = {
       }|${modalinteraction.fields.getTextInputValue("raison")}`
     );
     await modalinteraction.member.roles.add(
-      modalinteraction.guild.roles.cache.get(
-        (role) => role.id === "1076909148463190107"
-      )
+      modalinteraction.guild.roles.cache.get((role) => role.id === RoleAbsent)
     );
     modalinteraction.reply({ content: Allowed, ephemeral: true });
   },
