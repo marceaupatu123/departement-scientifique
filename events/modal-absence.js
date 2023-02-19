@@ -44,9 +44,8 @@ module.exports = {
         timestamp2 / 1000
       }|${modalinteraction.fields.getTextInputValue("raison")}`
     );
-    await modalinteraction.member.roles.add(
-      modalinteraction.guild.roles.cache.get((role) => role.id === RoleAbsent)
-    );
+    const absentrole = modalinteraction.guild.roles.cache.get(RoleAbsent);
+    await modalinteraction.member.roles.add(absentrole);
     modalinteraction.reply({ content: Allowed, ephemeral: true });
   },
 };
