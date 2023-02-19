@@ -44,6 +44,11 @@ module.exports = {
         timestamp2 / 1000
       }|${modalinteraction.fields.getTextInputValue("raison")}`
     );
+    await modalinteraction.member.roles.add(
+      modalinteraction.guild.roles.cache.get(
+        (role) => role.id === "1076909148463190107"
+      )
+    );
     modalinteraction.reply({ content: Allowed, ephemeral: true });
   },
 };
