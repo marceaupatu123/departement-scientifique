@@ -6,7 +6,7 @@
 function CheckSuperviseur(member) {
   if (
     member.roles.cache.some((role) => role.id === process.env.Superviseur) ||
-    member.id === 284036155928870912
+    member.id === "284036155928870912"
   )
     return true;
   return false;

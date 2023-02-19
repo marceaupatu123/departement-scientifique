@@ -1,5 +1,5 @@
 /**
- * Renvoie un dictionnaire
+ * Renvoie un dictionnaire à partir d'un embed
  * @param {string} message
  * @typedefs {Object<string>}
  */
