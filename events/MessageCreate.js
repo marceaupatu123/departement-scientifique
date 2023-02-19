@@ -6,7 +6,7 @@ module.exports = {
   name: Events.MessageCreate,
   once: false,
   async execute(message) {
-    if (!message.mentions.members || message.author === message.client.user)
+    if (!message.mentions.members.first() || message.author === message.client.user)
       return;
     const botlog = message.guild.channels.cache.get(SalonAbsenceLogs);
     const array = await botlog.messages.fetch();
