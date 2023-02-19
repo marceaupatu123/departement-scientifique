@@ -7,12 +7,12 @@ const {
 } = require("discord.js");
 const { modal } = require("../modals/experience");
 
-const { Superviseur } = process.env;
 const { SalonExpérience } = process.env;
 const { SalonExperienceValide } = process.env;
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json");
 const { menuderefus } = require("../SelectMenu/Experience");
 const { split } = require("../functions/database");
+const { CheckSuperviseur } = require("../functions/CheckRoles");
 
 const DisabledButtons = new ActionRowBuilder()
   .addComponents(
@@ -60,9 +60,7 @@ module.exports = {
       await interaction.showModal(modal);
       return;
     } // Boutton envoi exp
-    if (
-      !interaction.member.roles.cache.some((role) => role.id === Superviseur)
-    ) {
+    if (!CheckSuperviseur(interaction.member)) {
       interaction.reply({ content: NotAllowed, ephemeral: true });
       return;
     }
