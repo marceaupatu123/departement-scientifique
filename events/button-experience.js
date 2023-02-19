@@ -50,9 +50,9 @@ module.exports = {
   async execute(interaction) {
     if (
       !interaction.isButton() ||
-      !(
-        interaction.channelId === SalonExpérience ||
-        interaction.channelId === SalonExperienceValide
+      (
+        !interaction.channelId === SalonExpérience ||
+        !interaction.channelId === SalonExperienceValide
       )
     )
       return;
