@@ -7,8 +7,6 @@ const {
 } = require("discord.js");
 const { modal } = require("../modals/experience");
 
-const { SalonExpérience } = process.env;
-const { SalonExperienceValide } = process.env;
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json");
 const { menuderefus } = require("../SelectMenu/Experience");
 const { split } = require("../functions/database");

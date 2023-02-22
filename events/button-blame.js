@@ -42,6 +42,6 @@ module.exports = {
       embeds: [embed],
       components: [DisabledButtons],
     });
-    button.reply(Allowed);
+    button.reply({ content: Allowed, ephemeral: true });
   },
 };
