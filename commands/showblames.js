@@ -4,7 +4,7 @@ const {
   ApplicationCommandType,
   EmbedBuilder,
 } = require("discord.js");
-const { GetMemberBlame } = require("../functions/database");
+const { GetMemberBlame } = require("../functions/blames");
 
 module.exports = {
   data: new ContextMenuCommandBuilder()
