@@ -19,6 +19,7 @@ module.exports = {
     if (blames.length === 0)
       return interaction.reply({
         content: "🤷‍♀️ Cet utilisateur est plutot sage car il n'a pas de blâmes",
+        ephemeral: true,
       });
     const embed = new EmbedBuilder()
       .setColor("#ff0000")
