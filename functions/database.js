@@ -1,3 +1,12 @@
+class Blâme {
+  constructor(id, memberblamed, superviseur, raison) {
+    this.id = id;
+    this.memberblamed = memberblamed;
+    this.superviseur = superviseur;
+    this.raison = raison;
+  }
+}
+
 /**
  * Renvoie un dictionnaire à partir d'un embed
  * @param {string} message
@@ -14,4 +23,24 @@ function split(message) {
   return dic;
 }
 
-module.exports = { split };
+/**
+ * Renvoie tout les blâmes d'une personnes
+ * @param {TextChannel} logssalon
+ * @param {GuildMember} member
+ * @returns {Promise.<Array.<Blâme>}
+ */
+async function GetMemberBlame(logssalon, member) {
+  const array = await logssalon.messages.fetch();
+  const BlameArray = [];
+  array.forEach((message) => {
+    const splited = message.content.split("|");
+    if (splited[1] === `${member}`) {
+      BlameArray.push(
+        new Blâme(splited[0], splited[1], splited[2], splited[3])
+      );
+    }
+  });
+  return BlameArray;
+}
+
+module.exports = { split, GetMemberBlame };

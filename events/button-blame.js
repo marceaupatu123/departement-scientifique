@@ -27,7 +27,7 @@ module.exports = {
   async execute(button) {
     if (!button.isButton() || !(button.customId === "enlevecettemerde")) return;
     if (!button.member.roles.cache.some((role) => role.id === Superviseur))
-      return button.reply(NotAllowed);
+      return button.reply({ content: NotAllowed, ephemeral: true });
     const botlog = button.guild.channels.cache.get(SalonBlamelogs);
     const array = await botlog.messages.fetch();
     const { value } = button.message.embeds[0].fields[0];
