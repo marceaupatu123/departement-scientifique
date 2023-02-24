@@ -1,5 +1,4 @@
 const { Events, ActivityType } = require("discord.js");
-const { joinVoiceChannel } = require("@discordjs/voice");
 const { RemoveAbsence } = require("../functions/absences");
 
 module.exports = {
@@ -27,15 +26,6 @@ module.exports = {
         const member = members.get(memberId);
         RemoveAbsence(member);
       }
-    });
-    /** Connect to voice channel */
-
-    const connection = joinVoiceChannel({
-      channelId: "800497206058549298",
-      guildId: process.env.guildId,
-      adapterCreator: await client.guilds.cache.get(process.env.guildId)
-        .voiceAdapterCreator,
-      selfDeaf: false,
     });
   },
 };
