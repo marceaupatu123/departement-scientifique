@@ -11,8 +11,8 @@ const { modal } = require("../modals/blame");
 
 const { SalonBlamelogs } = process.env;
 const { SalonBlame } = process.env;
-const { Superviseur } = process.env;
 const { Allowed, NotAllowed } = require("../json/messages.json");
+const { CheckSuperviseur } = require("../functions/CheckRoles");
 
 function makeid(length) {
   let result = "";
@@ -31,7 +31,7 @@ module.exports = {
     .setName("Mettre un blâme")
     .setType(ApplicationCommandType.User),
   async execute(interaction) {
-    if (!interaction.member.roles.cache.some((role) => role.id === Superviseur))
+    if (!CheckSuperviseur(interaction.member))
       return interaction.reply({ content: NotAllowed, ephemeral: true });
     const user = interaction.targetUser;
     const botlog = interaction.guild.channels.cache.get(SalonBlamelogs);
@@ -42,6 +42,7 @@ module.exports = {
     } catch (e) {
       return console.log(e);
     }
+    modalinteraction.deferReply({ ephemeral: true });
     const blameid = makeid(7);
     await botlog.send(
       `${blameid}|${user}|${
@@ -82,6 +83,6 @@ module.exports = {
       embeds: [embed],
       components: [row],
     });
-    return modalinteraction.reply({ content: Allowed, ephemeral: true });
+    return modalinteraction.editReply({ content: Allowed, ephemeral: true });
   },
 };

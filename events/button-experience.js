@@ -5,13 +5,13 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
-const { modal } = require("../modals/experience.js");
-const { Superviseur } = process.env;
-const SalonExpérience = process.env.SalonExperience;
-const { SalonExperienceValide } = process.env;
+const { modal } = require("../modals/experience");
+
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json");
 const { menuderefus } = require("../SelectMenu/Experience");
 const { split } = require("../functions/database");
+const { CheckSuperviseur } = require("../functions/CheckRoles");
+
 const DisabledButtons = new ActionRowBuilder()
   .addComponents(
     new ButtonBuilder()
@@ -49,28 +49,29 @@ module.exports = {
     if (
       !interaction.isButton() ||
       !(
-        interaction.channelId == SalonExpérience ||
-        interaction.channelId == SalonExperienceValide
+        interaction.channelId === process.env.SalonExperience ||
+        interaction.channelId === process.env.SalonExperienceValide
       )
     )
       return;
-    if (interaction.customId == "expbutton") {
-      return await interaction.showModal(modal);
+    if (interaction.customId === "expbutton") {
+      await interaction.showModal(modal);
+      return;
     } // Boutton envoi exp
-    if (!interaction.member.roles.cache.some((role) => role.id == Superviseur))
-      return interaction.reply({ content: NotAllowed, ephemeral: true });
-
+    if (!CheckSuperviseur(interaction.member)) {
+      interaction.reply({ content: NotAllowed, ephemeral: true });
+      return;
+    }
     let embed = EmbedBuilder.from(interaction.message.embeds[0]);
     interaction.message.edit({
       embeds: [embed],
       components: [DisabledButtons],
     });
-    if (interaction.customId == "success") {
+    if (interaction.customId === "success") {
       // Button Accepté
       embed.addFields({
         name: "📁 | Informations sur la demande",
-        value:
-          "**Statut:** ✅ | Validé\n **Opérateur:** " + `${interaction.member}`,
+        value: `**Statut:** ✅ | Validé\n **Opérateur:**  ${interaction.member}`,
         inline: false,
       });
       interaction.reply({ content: Allowed, ephemeral: true });
@@ -87,13 +88,13 @@ module.exports = {
       try {
         menuinteraction = await reply.awaitMessageComponent({ time: 60000 });
         Raison =
-          menuinteraction.values[0] == "PCS"
+          menuinteraction.values[0] === "PCS"
             ? "Votre expérience pose un risque quant à l'application des Procédures de Confinements Spéciales."
-            : menuinteraction.values[0] == "ethic"
+            : menuinteraction.values[0] === "ethic"
             ? "Votre expérience pose un problème d'éthique, veuillez vous approcher d'un superviseur si vous estimez que l'expérience devrait tout de même être effectuée."
-            : menuinteraction.values[0] == "notusefull"
+            : menuinteraction.values[0] === "notusefull"
             ? "Votre expérience ne permet pas spécialement à la fondation d'en apprendre plus sur les capacités anormales du SCP, cela peut-être en raison de la thèse pas assez intéréssante ou bien l'expérience à déjà été effectuée."
-            : menuinteraction.values[0] == "expensive"
+            : menuinteraction.values[0] === "expensive"
             ? "Votre expérience est trop couteuse en ressources par rapport aux informations que nous pouvons potentiellement en tirer."
             : null;
       } catch (e) {
@@ -101,7 +102,7 @@ module.exports = {
           embeds: [embed],
           components: [EnabledButtons],
         });
-        return interaction.editReply({
+        interaction.editReply({
           content: Delais,
           ephemeral: true,
           components: [],
