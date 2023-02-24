@@ -3,7 +3,7 @@ require("dotenv").config();
 const { Events } = require("discord.js");
 const { Allowed, NotAllowed } = require("../json/messages.json");
 const { GetBlameByID } = require("../functions/blames");
-
+const { CheckSuperviseur } require("../functions/CheckRoles")
 const { Superviseur } = process.env;
 const { split } = require("../functions/database");
 
@@ -12,7 +12,7 @@ module.exports = {
   once: false,
   async execute(button) {
     if (!button.isButton() || !(button.customId === "enlevecettemerde")) return;
-    if (!button.member.roles.cache.some((role) => role.id === Superviseur))
+    if (!CheckSuperviseur(button.member)
       return button.reply({ content: NotAllowed, ephemeral: true });
     button.deferReply({ ephemeral: true });
     const { value } = button.message.embeds[0].fields[0];
