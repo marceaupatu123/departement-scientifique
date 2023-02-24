@@ -13,6 +13,15 @@ async function RemoveAbsence(member) {
     member.guild.roles.cache.get(process.env.RoleAbsent)
   );
   await mentioned.delete();
+  const embedlog = member.guild.channels.cache.get(
+    process.env.SalonAbsenceEmbed
+  );
+  const arrayembed = await embedlog.messages.fetch();
+  const mentioned2 = arrayembed.find(
+    (message) =>
+      message?.embeds[0].fields[0].value.includes(`${member}`) === true
+  );
+  mentioned2.delete();
   return true;
 }
 
