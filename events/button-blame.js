@@ -12,7 +12,7 @@ module.exports = {
   once: false,
   async execute(button) {
     if (!button.isButton() || !(button.customId === "enlevecettemerde")) return;
-    if (!CheckSuperviseur(button.member)
+    if (!CheckSuperviseur(button.member))
       return button.reply({ content: NotAllowed, ephemeral: true });
     button.deferReply({ ephemeral: true });
     const { value } = button.message.embeds[0].fields[0];
