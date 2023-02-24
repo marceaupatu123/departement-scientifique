@@ -20,10 +20,9 @@ class Blâme {
    * @returns {Message}
    */
   async getEmbedMessage(client) {
-    const messages = await client.guilds.cache
-      .get(process.env.guildId)
-      .channels.cache.get(process.env.SalonBlame)
-      .messages.fetch();
+    const guild = await client.guilds.cache.get(process.env.guildId);
+    const channel = await guild.channels.cache.get(process.env.SalonBlame);
+    const messages = await channel.messages.fetch();
     return messages.find((message) => {
       if (message?.embeds[0]) {
         const { value } = message.embeds[0].fields[0];
@@ -84,7 +83,7 @@ class Blâme {
  * @returns {Promise.<Array.<Blâme>}
  */
 async function GetMemberBlame(client, member) {
-  const logssalon = client.guilds.cache
+  const logssalon = await client.guilds.cache
     .get(process.env.guildId)
     .channels.cache.get(process.env.SalonBlamelogs);
   const array = await logssalon.messages.fetch();
