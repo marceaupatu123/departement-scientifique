@@ -12,10 +12,7 @@ module.exports = {
     .setType(ApplicationCommandType.User),
   async execute(interaction) {
     const member = interaction.targetMember;
-    const blames = await GetMemberBlame(
-      interaction.guild.channels.cache.get(process.env.SalonBlamelogs),
-      member
-    );
+    const blames = await GetMemberBlame(interaction.client, member);
     if (blames.length === 0)
       return interaction.reply({
         content: "🤷‍♀️ Cet utilisateur est plutot sage car il n'a pas de blâmes",
