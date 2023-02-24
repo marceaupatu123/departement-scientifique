@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Events } = require("discord.js");
+const { Events, EmbedBuilder } = require("discord.js");
 const { modal } = require("../modals/absence");
 const { Allowed } = require("../json/messages.json");
 
@@ -44,8 +44,35 @@ module.exports = {
         timestamp2 / 1000
       }|${modalinteraction.fields.getTextInputValue("raison")}`
     );
+    const embed = new EmbedBuilder()
+      .setColor("#03fc90")
+      .setTitle("🥥 | Notification d'Absence")
+      .setThumbnail("https://cdn-icons-png.flaticon.com/512/4952/4952999.png")
+      .addFields(
+        {
+          name: "📋 | Informations sur le Scientifique",
+          value:
+            `**Nom:** ${modalinteraction.user}` +
+            `\n**Grade:** ${modalinteraction.fields.getTextInputValue(
+              "grade"
+            )}`,
+          inline: true,
+        },
+        {
+          name: "📁 | Informations sur la demande",
+          value: `**Date de début:** <t:${
+            timestamp1 / 1000
+          }:D>\n**Date de fin:** <t:${
+            timestamp2 / 1000
+          }:R>\n**Raison:** ${modalinteraction.fields.getTextInputValue(
+            "raison"
+          )}`,
+          inline: false,
+        }
+      );
     const absentrole = modalinteraction.guild.roles.cache.get(RoleAbsent);
     await modalinteraction.member.roles.add(absentrole);
+    modalinteraction.channel.send({ content: "", embeds: [embed] });
     modalinteraction.reply({ content: Allowed, ephemeral: true });
   },
 };

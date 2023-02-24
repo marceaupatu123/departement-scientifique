@@ -9,6 +9,12 @@ const modal = new ModalBuilder()
   .setCustomId("modalabsence")
   .setTitle("Formulaire d' absences");
 
+const grade = new TextInputBuilder()
+  .setCustomId("grade")
+  .setLabel("Grade")
+  .setMaxLength(20)
+  .setStyle(TextInputStyle.Short);
+
 const timestampstart = new TextInputBuilder()
   .setCustomId("starttimestamp")
   .setLabel("Date de début (DD/MM/YYYY)")
@@ -30,6 +36,7 @@ const raison = new TextInputBuilder()
   .setStyle(TextInputStyle.Paragraph);
 
 modal.addComponents(
+  new ActionRowBuilder().addComponents(grade),
   new ActionRowBuilder().addComponents(timestampstart),
   new ActionRowBuilder().addComponents(timestampend),
   new ActionRowBuilder().addComponents(raison)
