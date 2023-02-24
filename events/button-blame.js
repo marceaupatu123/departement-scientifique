@@ -14,12 +14,10 @@ module.exports = {
     if (!button.isButton() || !(button.customId === "enlevecettemerde")) return;
     if (!button.member.roles.cache.some((role) => role.id === Superviseur))
       return button.reply({ content: NotAllowed, ephemeral: true });
+    button.deferReply({ ephemeral: true });
     const { value } = button.message.embeds[0].fields[0];
-    const blame = await GetBlameByID(
-      button.guild.channels.cache.get(process.env.SalonBlamelogs),
-      split(value).ID
-    );
-    blame.deleteBlame();
-    button.reply({ content: Allowed, ephemeral: true });
+    const blame = await GetBlameByID(button.client, split(value).ID);
+    await blame.deleteBlame(button.client);
+    button.editReply({ content: Allowed, ephemeral: true });
   },
 };

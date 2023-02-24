@@ -14,19 +14,29 @@ class Blâme {
     this.raison = raison;
   }
 
-  async getEmbedMessage() {
-    const { client } = require("../main");
+  /**
+   * Renvoie le message contenant l'embed du blâme
+   * @param {Client} client
+   * @returns {Message}
+   */
+  async getEmbedMessage(client) {
     const messages = await client.guilds.cache
       .get(process.env.guildId)
       .channels.cache.get(process.env.SalonBlame)
       .messages.fetch();
     return messages.find(
-      (message) => split(message.embeds[0].fields[0].value).ID === this.id
+      (message) =>
+        message.embeds[0]?.fields[0].value &&
+        split(message.embeds[0]?.fields[0].value).ID === this.id
     );
   }
 
-  async getLogMessage() {
-    const { client } = require("../main");
+  /**
+   * Renvoie le message contenant de log du blâme
+   * @param {Client} client
+   * @returns {Message}
+   */
+  async getLogMessage(client) {
     const messages = await client.guilds.cache
       .get(process.env.guildId)
       .channels.cache.get(process.env.SalonBlameLogs)
@@ -34,7 +44,11 @@ class Blâme {
     return messages.find((element) => element.content.includes(this.id));
   }
 
-  async deleteBlame() {
+  /**
+   * Supprime le blâme
+   * @param {Client} client
+   */
+  async deleteBlame(client) {
     const DisabledButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
         .setCustomId("denied")
@@ -42,8 +56,8 @@ class Blâme {
         .setDisabled(true)
         .setStyle(ButtonStyle.Danger)
     );
-    const logMessage = await this.getLogMessage();
-    const embedMessage = await this.getEmbedMessage();
+    const logMessage = await this.getLogMessage(client);
+    const embedMessage = await this.getEmbedMessage(client);
     const embed = EmbedBuilder.from(embedMessage.embeds[0]).setColor("#290000");
     embedMessage.edit({
       content: "",
@@ -67,7 +81,10 @@ class Blâme {
  * @param {GuildMember} member
  * @returns {Promise.<Array.<Blâme>}
  */
-async function GetMemberBlame(logssalon, member) {
+async function GetMemberBlame(client, member) {
+  const logssalon = client.guilds.cache
+    .get(process.env.guildId)
+    .channels.cache.get(process.env.SalonBlamelogs);
   const array = await logssalon.messages.fetch();
   const BlameArray = [];
   array.forEach((message) => {
@@ -87,7 +104,10 @@ async function GetMemberBlame(logssalon, member) {
  * @param {String} id
  * @returns {Promise.<Array.<Blâme>}
  */
-async function GetBlameByID(logssalon, id) {
+async function GetBlameByID(client, id) {
+  const logssalon = client.guilds.cache
+    .get(process.env.guildId)
+    .channels.cache.get(process.env.SalonBlamelogs);
   const array = await logssalon.messages.fetch();
   const args = array
     .find((message) => message.content.split("|")[0] === id)

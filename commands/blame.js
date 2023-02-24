@@ -42,6 +42,7 @@ module.exports = {
     } catch (e) {
       return console.log(e);
     }
+    modalinteraction.deferReply({ ephemeral: true });
     const blameid = makeid(7);
     await botlog.send(
       `${blameid}|${user}|${
@@ -82,6 +83,6 @@ module.exports = {
       embeds: [embed],
       components: [row],
     });
-    return modalinteraction.reply({ content: Allowed, ephemeral: true });
+    return modalinteraction.editReply({ content: Allowed, ephemeral: true });
   },
 };
