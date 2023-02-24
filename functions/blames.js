@@ -25,15 +25,13 @@ class Blâme {
       .channels.cache.get(process.env.SalonBlame)
       .messages.fetch();
     return messages.find((message) => {
-  const embed = message.embeds[0];
-  if (embed && embed.fields[0] && embed.fields[0].value) {
-    const value = embed.fields[0].value;
-    const id = split(value).ID; // Assurez-vous que "ID" est le séparateur approprié.
-    return id === this.id;
-  }
-  return false;
-});
-
+      if (message?.embeds[0]) {
+        const { value } = message.embeds[0].fields[0];
+        const id = split(value).ID;
+        return id === this.id;
+      }
+      return false;
+    });
   }
 
   /**
@@ -42,10 +40,9 @@ class Blâme {
    * @returns {Message}
    */
   async getLogMessage(client) {
-    const messages = await client.guilds.cache
-      .get(process.env.guildId)
-      .channels.cache.get(process.env.SalonBlameLogs)
-      .messages.fetch();
+    const guild = await client.guilds.cache.get(process.env.guildId);
+    const channel = await guild.channels.cache.get(process.env.SalonBlameLogs);
+    const messages = await channel.messages.fetch();
     return messages.find((element) => element.content.includes(this.id));
   }
 
