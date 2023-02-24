@@ -24,11 +24,16 @@ class Blâme {
       .get(process.env.guildId)
       .channels.cache.get(process.env.SalonBlame)
       .messages.fetch();
-    return messages.find(
-      (message) =>
-        message.embeds[0]?.fields[0].value &&
-        split(message.embeds[0]?.fields[0].value).ID === this.id
-    );
+    return messages.find((message) => {
+  const embed = message.embeds[0];
+  if (embed && embed.fields[0] && embed.fields[0].value) {
+    const value = embed.fields[0].value;
+    const id = value.split("ID")[1]; // Assurez-vous que "ID" est le séparateur approprié.
+    return id === this.id;
+  }
+  return false;
+});
+
   }
 
   /**
