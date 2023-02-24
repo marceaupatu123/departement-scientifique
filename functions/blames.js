@@ -40,7 +40,7 @@ class Blâme {
    */
   async getLogMessage(client) {
     const guild = await client.guilds.cache.get(process.env.guildId);
-    const channel = await guild.channels.cache.get(process.env.SalonBlameLogs);
+    const channel = await guild.channels.cache.get(process.env.SalonBlamelogs);
     const messages = await channel.messages.fetch();
     return messages.find((element) => element.content.includes(this.id));
   }
