@@ -2,6 +2,7 @@
  * Enlève l'absence d'un membre, renvoie un booléen si l'opération est faite avec succès.
  * @param {GuildMember} member
  * @typedefs {Object<string>}
+ * @returns {Promise<boolean>}
  */
 async function RemoveAbsence(member) {
   const botlog = member.guild.channels.cache.get(process.env.SalonAbsenceLogs);
