@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Events, EmbedBuilder } = require("discord.js");
 const { modal } = require("../modals/absence");
 const { Allowed } = require("../json/messages.json");
+const { RemoveAbsence } = require("../functions/absences");
 
 const { SalonAbsenceLogs, RoleAbsent } = process.env;
 
@@ -23,20 +24,20 @@ module.exports = {
     const mentioned = array.find(
       (logs) => logs.mentions.members.first()?.id === modalinteraction.user.id
     );
-    if (mentioned) mentioned.delete();
+    if (mentioned) await RemoveAbsence(modalinteraction.member);
     let timestamp1 =
       modalinteraction.fields.getTextInputValue("starttimestamp");
     timestamp1 = timestamp1.split("/");
     let timestamp2 = modalinteraction.fields.getTextInputValue("endtimestamp");
     timestamp2 = timestamp2.split("/");
     timestamp1 = new Date(
-      timestamp1[2] - 1,
+      timestamp1[2],
       timestamp1[1],
       timestamp1[0]
     ).getTime();
     timestamp2 = new Date(
       timestamp2[2],
-      timestamp2[1],
+      timestamp2[1] - 1,
       timestamp2[0]
     ).getTime();
     await botlog.send(
