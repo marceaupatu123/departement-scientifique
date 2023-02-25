@@ -7,17 +7,18 @@ const {
 const { split } = require("./database");
 
 class Blâme {
-  constructor(id, memberblamed, superviseur, raison) {
+  constructor(id, memberblamed, superviseur, raison, type = null) {
     this.id = id;
     this.memberblamed = memberblamed;
     this.superviseur = superviseur;
     this.raison = raison;
+    this.type = type;
   }
 
   /**
    * Renvoie le message contenant l'embed du blâme
    * @param {Client} client
-   * @returns {Message}
+   * @returns {Promise<Message>}
    */
   async getEmbedMessage(client) {
     const guild = await client.guilds.cache.get(process.env.guildId);
@@ -29,20 +30,33 @@ class Blâme {
         const id = split(value).ID;
         return id === this.id;
       }
-      return false;
+      return null;
     });
   }
 
   /**
    * Renvoie le message contenant de log du blâme
    * @param {Client} client
-   * @returns {Message}
+   * @returns {Promise<Message>}
    */
   async getLogMessage(client) {
     const guild = await client.guilds.cache.get(process.env.guildId);
     const channel = await guild.channels.cache.get(process.env.SalonBlamelogs);
     const messages = await channel.messages.fetch();
     return messages.find((element) => element.content.includes(this.id));
+  }
+
+  /**
+   * Renvoie le type en essayant de le trouver à partir de l'embed
+   * @param {Client} client
+   * @returns {Promise<number>}
+   */
+  async getTypeByEmbed(client) {
+    const embedmessage = await this.getEmbedMessage(client);
+    const embedesc = embedmessage.embeds[0].description;
+    const founddigit = embedesc.match(/\b\d(?=\D*$)/);
+    this.type = Number(founddigit[0]);
+    return this.type;
   }
 
   /**
@@ -69,12 +83,6 @@ class Blâme {
     delete this;
   }
 }
-
-/**
- * Renvoie un booléen pour savoir si c'est un superviseur, cette fonction valide automatiquement Dominus_Marceau pour tout tests et maintenances.
- * @param {GuildMember} member
- * @typedefs {Object<string>}
- */
 
 /**
  * Renvoie tout les blâmes d'une personnes

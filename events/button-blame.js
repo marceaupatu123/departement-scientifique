@@ -3,8 +3,8 @@ require("dotenv").config();
 const { Events } = require("discord.js");
 const { Allowed, NotAllowed } = require("../json/messages.json");
 const { GetBlameByID } = require("../functions/blames");
-const { CheckSuperviseur } = require("../functions/CheckRoles")
-const { Superviseur } = process.env;
+const { CheckSuperviseur } = require("../functions/CheckRoles");
+
 const { split } = require("../functions/database");
 
 module.exports = {
