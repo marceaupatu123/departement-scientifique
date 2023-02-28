@@ -20,7 +20,7 @@ async function RemoveAbsence(member) {
   const arrayembed = await embedlog.messages.fetch();
   const mentioned2 = arrayembed.find(
     (message) =>
-      message?.embeds[0].fields[0].value.includes(`${member}`) === true
+      message?.embeds[0].fields[0].value.includes(`!${member.id}`) === true
   );
   mentioned2.delete();
   return true;
