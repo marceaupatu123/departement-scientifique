@@ -90,7 +90,7 @@ async function GetMemberBlame(client, member) {
   const BlameArray = [];
   array.forEach((message) => {
     const splited = message.content.split("|");
-    if (splited[1] === `${member}`) {
+    if (splited[1] === `!${member.id}`) {
       BlameArray.push(
         new Blâme(splited[0], splited[1], splited[2], splited[3])
       );
