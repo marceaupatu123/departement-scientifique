@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { Events, EmbedBuilder } = require("discord.js");
 const { modal } = require("../modals/absence");
-const { Allowed } = require("../json/messages.json");
+const { Allowed, DateIncorrecte } = require("../json/messages.json");
 const { RemoveAbsence } = require("../functions/absences");
 
 const { SalonAbsenceLogs, RoleAbsent } = process.env;
@@ -30,11 +30,27 @@ module.exports = {
     timestamp1 = timestamp1.split("/");
     let timestamp2 = modalinteraction.fields.getTextInputValue("endtimestamp");
     timestamp2 = timestamp2.split("/");
+    timestamp1.forEach((element, index) => {
+      timestamp1[index] = Number(element);
+    });
+    timestamp2.forEach((element, index) => {
+      timestamp2[index] = Number(element);
+    });
+    if (
+      timestamp1.some((element) => Number.isNaN(element)) ||
+      timestamp2.some((element) => Number.isNaN(element))
+    ) {
+      await modalinteraction.reply({
+        content: DateIncorrecte,
+        ephemeral: true,
+      });
+      return;
+    }
     timestamp1 =
       new Date(
         Date.UTC(
-          timestamp1[2] - 1,
-          timestamp1[1],
+          timestamp1[2],
+          timestamp1[1] - 1, // mois sont indexés de 0 à 11 en js
           timestamp1[0],
           new Date().getUTCHours() + 1,
           new Date().getUTCMinutes()
@@ -44,7 +60,7 @@ module.exports = {
       new Date(
         Date.UTC(
           timestamp2[2],
-          timestamp2[1] - 1,
+          timestamp2[1] - 1, // mois sont indexés de 0 à 11 en js
           timestamp2[0],
           new Date().getUTCHours() + 1,
           new Date().getUTCMinutes()
