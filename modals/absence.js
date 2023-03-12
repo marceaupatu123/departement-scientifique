@@ -12,7 +12,7 @@ const modal = new ModalBuilder()
 const grade = new TextInputBuilder()
   .setCustomId("grade")
   .setLabel("Grade")
-  .setMaxLength(20)
+  .setMaxLength(40)
   .setStyle(TextInputStyle.Short);
 
 const timestampstart = new TextInputBuilder()

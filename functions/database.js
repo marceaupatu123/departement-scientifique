@@ -3,7 +3,7 @@
  * @param {string} message
  * @typedefs {Object<string>}
  */
-function split(message) {
+function splitEmbed(message) {
   if (typeof message !== "string")
     throw new TypeError(`waiting for string but received ${typeof message}`);
   let value = message.replaceAll("*", "");
@@ -16,4 +16,13 @@ function split(message) {
   return dic;
 }
 
-module.exports = { split };
+/**
+ * Renvoie un dictionnaire à partir d'un embed
+ * @param {string} message
+ * @typedefs {Object<string>}
+ * @deprecated utilisez désormais splitEmbed()
+ */
+function split(message) {
+  return splitEmbed(message);
+}
+module.exports = { split, splitEmbed };

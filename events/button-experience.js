@@ -10,7 +10,7 @@ const { modal } = require("../modals/experience");
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json");
 const { menuderefus } = require("../SelectMenu/Experience");
 const { split } = require("../functions/database");
-const { CheckSuperviseur } = require("../functions/CheckRoles");
+const { CheckSuperviseur } = require("../functions/checkroles");
 
 const DisabledButtons = new ActionRowBuilder()
   .addComponents(

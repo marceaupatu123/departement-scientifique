@@ -12,7 +12,7 @@ const { modal } = require("../modals/blame");
 const { SalonBlamelogs } = process.env;
 const { SalonBlame } = process.env;
 const { Allowed, NotAllowed } = require("../json/messages.json");
-const { CheckSuperviseur } = require("../functions/CheckRoles");
+const { CheckSuperviseur } = require("../functions/checkroles");
 
 function makeid(length) {
   let result = "";
@@ -44,18 +44,18 @@ module.exports = {
     }
     modalinteraction.deferReply({ ephemeral: true });
     const blameid = makeid(7);
-    await botlog.send(
-      `${blameid}|${user}|${
-        interaction.member
-      }|${modalinteraction.fields.getTextInputValue("raison")}`
-    );
     const array = await botlog.messages.fetch();
-    let keys = 0;
+    let keys = 1;
     array.forEach((element) => {
       const split = element.content.split("|");
       const wow = split[1].search(`${user}`);
       if (wow > -1) keys += 1;
     });
+    await botlog.send(
+      `${blameid}|${user}|${
+        interaction.member
+      }|${modalinteraction.fields.getTextInputValue("raison")}`
+    );
     const embed = new EmbedBuilder()
       .setColor("#ff0000")
       .setTitle("🔔 | Notification de blâme")
