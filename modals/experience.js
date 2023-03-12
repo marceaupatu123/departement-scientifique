@@ -18,7 +18,7 @@ const grade = new TextInputBuilder()
 const scp = new TextInputBuilder()
   .setCustomId("scp")
   .setLabel("SCP")
-  .setMaxLength(4)
+  .setMaxLength(8)
   .setStyle(TextInputStyle.Short);
 
 const ut = new TextInputBuilder()
