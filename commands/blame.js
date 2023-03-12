@@ -12,7 +12,7 @@ const { modal } = require("../modals/blame");
 const { SalonBlamelogs } = process.env;
 const { SalonBlame } = process.env;
 const { Allowed, NotAllowed } = require("../json/messages.json");
-const { CheckSuperviseur } = require("../functions/CheckRoles");
+const { CheckSuperviseur } = require("../functions/checkroles");
 
 function makeid(length) {
   let result = "";

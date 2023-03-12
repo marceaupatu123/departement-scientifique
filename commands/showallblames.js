@@ -2,7 +2,7 @@ require("dotenv").config();
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 const { NotAllowed } = require("../json/messages.json");
-const { CheckSuperviseur } = require("../functions/CheckRoles");
+const { CheckSuperviseur } = require("../functions/checkroles");
 const { Blâme } = require("../functions/blames");
 
 module.exports = {
