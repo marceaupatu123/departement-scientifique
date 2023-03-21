@@ -24,6 +24,11 @@ const menuderefus = new ActionRowBuilder().addComponents(
         label: "Trop Couteux",
         description: "L'expérience est trop chère.",
         value: "expensive",
+      },
+      {
+        label: "Accréditation",
+        description: "Niveau insuffisant.",
+        value: "notallowed",
       }
     )
 );
