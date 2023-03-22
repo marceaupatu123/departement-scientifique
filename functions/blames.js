@@ -6,6 +6,15 @@ const {
 } = require("discord.js");
 const { split } = require("./database");
 
+/**
+ * Une classe représentant un blâme.
+ * @class
+ * @param {string} id - ID du blâme
+ * @param {DiscordUser} memberblamed - Utilisateur étant blâmé
+ * @param {DiscordUser} superviseur - Utilisateur ayant blâmé
+ * @param {string} raison - Raison du blâme
+ * @param {number} type - type du blâme
+ * */
 class Blâme {
   constructor(id, memberblamed, superviseur, raison, type = null) {
     this.id = id;

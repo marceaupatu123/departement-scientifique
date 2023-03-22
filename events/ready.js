@@ -6,6 +6,7 @@ module.exports = {
   once: true,
   async execute(client) {
     console.log(`Ready! Logged in as ${client.user.tag}`);
+    client.user.setStatus("online");
     client.user.setActivity("Les Gacha du Dr Dominus", {
       type: ActivityType.Watching,
     });
