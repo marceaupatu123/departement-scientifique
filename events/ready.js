@@ -24,6 +24,7 @@ module.exports = {
       if (infos[2] - DateNow < 0) {
         const memberId = v.mentions.users.first().id;
         const member = members.get(memberId);
+        if (!member) return;
         RemoveAbsence(member);
       }
     });
