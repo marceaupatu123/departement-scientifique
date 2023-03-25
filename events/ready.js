@@ -49,10 +49,10 @@ module.exports = {
         return;
       const DateNow = Date.now() / 1000;
       const thescp = await SCP.fetchSCP(client, infos[0]);
-      if (DateNow - infos[2] >= 20) {
+      if (DateNow - infos[2] >= 115200) {
         // 32 heures de delais
         await thescp.changeCetStatus("needcheckpriority");
-      } else if (DateNow - infos[2] >= 5) {
+      } else if (DateNow - infos[2] >= 57600) {
         // 16 heures de delais
         await thescp.changeCetStatus("needcheck");
       }
