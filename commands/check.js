@@ -56,5 +56,11 @@ module.exports = {
     await checkPermission("ViewChannel", process.env.SalonAbsenceEmbed);
     await checkPermission("SendMessages", process.env.SalonAbsenceEmbed);
     await checkPermission("ManageRoles", null, true, "Gérer les rôles");
+    await checkPermission("ViewChannel", process.env.SCPDB);
+    await checkPermission("SendMessages", process.env.SCPDB);
+    await checkPermission("ViewChannel", process.env.cetlogs);
+    await checkPermission("SendMessages", process.env.cetlogs);
+    await checkPermission("ViewChannel", process.env.cetembedlogs);
+    await checkPermission("SendMessages", process.env.cetembedlogs);
   },
 };

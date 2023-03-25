@@ -22,7 +22,8 @@
 Il existe divers objets et fonctions dans le dosssier `./functions` qui sont toutes documentées avec JSDocs.
 
 ### Explications des dossiers :
-- Le dossier `./functions/checkroles.js` contient toutes les fonctions en rapport avec la vérification du rôle ou de l'identité de la personne (Superviseur)...
+- Le dossier `./functions/checkroles.js` contient toutes les fonctions en rapport avec la vérification du rôle ou de l'identité de la personne (Superviseur...)
 - Le dossier `./functions/blames.js` contient toutes les fonctions et objets en rapport avec les blâmes.
 - Le dossier `./functions/database.js` contient toutes les fonctions en rapport avec la base de donnée (comme récupérer sous forme de tableau/dictionnaire)
 - Le dossier `./functions/absences.js` contient toutes les fonctions et objets en rapport avec les absences.
+- Le dossier `./functions/scp.js` contient toutes les fonctions et objets en rapport avec les SCPs.
