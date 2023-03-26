@@ -150,9 +150,10 @@ class SCP {
   async getCETInfo() {
     const botlog = await this.#guild.channels.cache.get(process.env.cetlogs);
     const messages = await botlog.messages.fetch();
-    const thelog = await messages.find((element) =>
-      element.content.includes(this.id)
-    );
+    const thelog = await messages.find((element) => {
+      const split = element.content.split("|");
+      return split[0] === this.id;
+    });
     const thelogarray = thelog.content.split("|");
     if (!thelog) return null;
     const map = new Map();
