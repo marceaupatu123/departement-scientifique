@@ -6,7 +6,9 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
+const { CheckSuperviseur } = require("../functions/checkroles");
 const { SCP } = require("../functions/scp");
+const { NotAllowed } = require("../json/messages.json");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,6 +21,10 @@ module.exports = {
     const botlog = await interaction.guild.channels.cache.get(
       process.env.cetlogs
     );
+    if (!CheckSuperviseur(interaction.member)) {
+      interaction.reply({ content: NotAllowed, ephemeral: true });
+      return;
+    }
     const scpnumber = await interaction.options.getNumber("numero");
     const thescp = await SCP.fetchSCP(interaction.client, scpnumber);
     const time = Math.floor(Date.now() / 1000);
