@@ -8,7 +8,7 @@ const {
 const { modal } = require("../modals/experience");
 
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json");
-const { menuderefus } = require("../select/experience");
+const { menuderefus } = require("../selectmenu/experience");
 const { split } = require("../functions/database");
 const { CheckSuperviseur } = require("../functions/checkroles");
 
