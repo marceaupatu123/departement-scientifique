@@ -243,8 +243,8 @@ class SCP {
     } else if (status === "needcheck") {
       embed = embed
         .addFields({
-          name: "📁 | Informations sur la demande",
-          value: `**Date du SASC:** <t:${time}:R> \n**Signaleur:** ${operator} \n**Etat du SASC:** 🔵 Besoin d'un CET`,
+          name: "📁 | Informations sur le CET",
+          value: `**Date du dernier CET:** <t:${time}:R> \n**Signaleur:** ${operator} \n**Etat du SASC:** 🔵 Besoin d'un CET`,
           inline: false,
         })
         .setColor("Blue");
@@ -264,7 +264,7 @@ class SCP {
     } else if (status === "needcheckpriority") {
       embed = embed
         .addFields({
-          name: "📁 | Informations sur la demande",
+          name: "📁 | Informations sur le CET",
           value: `**Date du dernier CET:** <t:${time}:R> \n**Opérateur:** ${operator} \n**Etat du SASC:** 🟠 Besoin d'un CET en Urgence`,
           inline: false,
         })
