@@ -2,7 +2,7 @@ const { Events } = require("discord.js");
 const { splitEmbed } = require("../functions/database");
 const { SCP } = require("../functions/scp");
 const { Allowed } = require("../json/messages.json");
-const { menucetincident } = require("../selectmenu/cet");
+const { menucetincident } = require("../select/cet");
 
 module.exports = {
   name: Events.InteractionCreate,
