@@ -45,12 +45,19 @@ module.exports = {
           .setStyle(ButtonStyle.Primary)
       );
 
-    const SecondButton = new ActionRowBuilder().addComponents(
-      new ButtonBuilder()
-        .setCustomId("setupabsences")
-        .setLabel("🥥 Setup Abscences")
-        .setStyle(ButtonStyle.Primary)
-    );
+    const SecondButton = new ActionRowBuilder()
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId("setupabsences")
+          .setLabel("🥥 Setup Abscences")
+          .setStyle(ButtonStyle.Primary)
+      )
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId("maintenance")
+          .setLabel("⚒️ Mode Maintenance")
+          .setStyle(ButtonStyle.Primary)
+      );
 
     const ConfigEmbed = new EmbedBuilder()
       .setColor("#91ff00")
@@ -88,6 +95,11 @@ module.exports = {
     /**
      * SETUP DES BOUTTONS UTILISATEURS
      */
+    interaction.deleteReply();
+    if (button.customId === "maintenance") {
+      interaction.client.user.setStatus("idle");
+      return interaction.client.user.setActivity("⚒️ Maintenance");
+    }
     if (button.customId === "setupconseil") {
       row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()

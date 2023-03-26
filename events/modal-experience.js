@@ -6,8 +6,8 @@ const {
   ButtonBuilder,
   ButtonStyle,
 } = require("discord.js");
-const axios = require("axios");
 const { Allowed } = require("../json/messages.json");
+const { SCP } = require("../functions/scp");
 
 const { SalonExperienceValide } = process.env;
 const { Superviseur } = process.env;
@@ -35,21 +35,14 @@ module.exports = {
           .setStyle(ButtonStyle.Danger)
       );
     modalinteraction.deferReply({ ephemeral: true });
-    let reply = await axios.get(
-      `https://www.googleapis.com/customsearch/v1?q=SCP-${modalinteraction.fields.getTextInputValue(
-        "scp"
-      )} png&searchType=image&cx=463e7e2a605284f03&key=AIzaSyDMRUKEOQ9I2UZ1ktQc19lzukZnExajfbM&imgSize=medium`
+    const thescp = await SCP.fetchSCP(
+      modalinteraction.client,
+      modalinteraction.fields.getTextInputValue("scp")
     );
-    reply = reply.data.items;
-    reply.forEach((element) => {
-      if (element.link.includes("https://i.ytimg.com/v")) {
-        reply.splice(reply.indexOf(element), 1);
-      }
-    });
     const embed = new EmbedBuilder()
       .setColor("#03fc90")
       .setTitle("Demande d'Experience")
-      .setThumbnail(reply[0].link)
+      .setThumbnail(thescp.imageurl)
       .addFields(
         {
           name: "📋 | Informations sur le Scientifique",

@@ -5,7 +5,9 @@
  * @returns {Promise<boolean>}
  */
 async function RemoveAbsence(member) {
-  const botlog = member.guild.channels.cache.get(process.env.SalonAbsenceLogs);
+  const botlog = await member.guild.channels.cache.get(
+    process.env.SalonAbsenceLogs
+  );
   const array = await botlog.messages.fetch();
   const mentioned = array.find(
     (logs) => logs.mentions.members.first()?.id === member.id

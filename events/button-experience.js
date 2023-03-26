@@ -8,9 +8,9 @@ const {
 const { modal } = require("../modals/experience");
 
 const { Allowed, NotAllowed, Delais } = require("../json/messages.json");
-const { menuderefus } = require("../SelectMenu/Experience");
+const { menuderefus } = require("../selectmenu/experience");
 const { split } = require("../functions/database");
-const { CheckSuperviseur } = require("../functions/CheckRoles");
+const { CheckSuperviseur } = require("../functions/checkroles");
 
 const DisabledButtons = new ActionRowBuilder()
   .addComponents(
@@ -96,6 +96,8 @@ module.exports = {
             ? "Votre expérience ne permet pas spécialement à la fondation d'en apprendre plus sur les capacités anormales du SCP, cela peut-être en raison de la thèse pas assez intéréssante ou bien l'expérience à déjà été effectuée."
             : menuinteraction.values[0] === "expensive"
             ? "Votre expérience est trop couteuse en ressources par rapport aux informations que nous pouvons potentiellement en tirer."
+            : menuinteraction.values[0] === "notallowed"
+            ? "Vous n'avez pas l'accréditation suffisante pour faire cette expérience. Veuillez vous rensigner sur les restrictions de votre niveau d'accréditation."
             : null;
       } catch (e) {
         interaction.message.edit({
