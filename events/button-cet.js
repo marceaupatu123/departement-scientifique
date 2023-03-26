@@ -9,7 +9,7 @@ module.exports = {
   once: false,
   async execute(button) {
     if (
-      !button.isButton() &&
+      !button.isButton() ||
       !(button.customId === "cetdone" || button.customId === "incident")
     )
       return;

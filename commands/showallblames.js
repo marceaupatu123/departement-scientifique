@@ -12,6 +12,7 @@ module.exports = {
   async execute(interaction) {
     if (!CheckSuperviseur(interaction.member))
       return interaction.reply({ content: NotAllowed, ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
     const botlog = await interaction.guild.channels.cache.get(
       process.env.SalonBlamelogs
     );
@@ -52,34 +53,69 @@ module.exports = {
     await Promise.all(promises);
 
     console.log(StringArray);
-    const embed = new EmbedBuilder()
-      .setColor("#ff0000")
-      .setTitle(`📜 | Liste des blâmes du serveur`)
-      .addFields({
-        name: `⚖️ | Blâme 1`,
-        value:
-          StringArray.type1 !== ""
-            ? StringArray.type1
-            : "🤷‍♀️ Aucun blâme de type 1 actif.",
-        inline: false,
-      })
-      .addFields({
-        name: `⚖️ | Blâme 2`,
-        value:
-          StringArray.type2 !== ""
-            ? StringArray.type2
-            : "🤷‍♀️ Aucun blâme de type 2 actif.",
-        inline: false,
-      })
-      .addFields({
-        name: `⚖️ | Blâme 3`,
-        value:
-          StringArray.type3 !== ""
-            ? StringArray.type3
-            : "🤷‍♀️ Aucun blâme de type 3 actif.",
-        inline: false,
-      });
-
-    return interaction.reply({ content: "", ephemeral: true, embeds: [embed] });
+    let embed = null;
+    if (StringArray.type1.length < 1024 || StringArray.type1.length < 1024) {
+      embed = [
+        new EmbedBuilder()
+          .setColor("#ff0000")
+          .setTitle(`📜 | Liste des blâmes du serveur`)
+          .addFields({
+            name: `⚖️ | Blâme 1`,
+            value:
+              StringArray.type1 !== ""
+                ? StringArray.type1
+                : "🤷‍♀️ Aucun blâme de type 1 actif.",
+            inline: false,
+          })
+          .addFields({
+            name: `⚖️ | Blâme 2`,
+            value:
+              StringArray.type2 !== ""
+                ? StringArray.type2
+                : "🤷‍♀️ Aucun blâme de type 2 actif.",
+            inline: false,
+          })
+          .addFields({
+            name: `⚖️ | Blâme 3`,
+            value:
+              StringArray.type3 !== ""
+                ? StringArray.type3
+                : "🤷‍♀️ Aucun blâme de type 3 actif.",
+            inline: false,
+          }),
+      ];
+    } else {
+      embed = [
+        new EmbedBuilder()
+          .setColor("#ff0000")
+          .setTitle(`⚖️ | Liste des blâmes 1 du serveur`)
+          .setDescription(
+            StringArray.type1 !== ""
+              ? StringArray.type1
+              : "🤷‍♀️ Aucun blâme de type 1 actif."
+          ),
+        new EmbedBuilder()
+          .setColor("#ff0000")
+          .setTitle(`⚖️ | Liste des blâmes 2 du serveur`)
+          .setDescription(
+            StringArray.type2 !== ""
+              ? StringArray.type2
+              : "🤷‍♀️ Aucun blâme de type 2 actif."
+          ),
+        new EmbedBuilder()
+          .setColor("#ff0000")
+          .setTitle(`⚖️ | Liste des blâmes 3 du serveur`)
+          .setDescription(
+            StringArray.type3 !== ""
+              ? StringArray.type3
+              : "🤷‍♀️ Aucun blâme de type 3 actif."
+          ),
+      ];
+    }
+    return interaction.editReply({
+      content: "",
+      ephemeral: true,
+      embeds: embed,
+    });
   },
 };
