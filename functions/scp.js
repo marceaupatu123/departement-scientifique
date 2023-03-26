@@ -165,21 +165,35 @@ class SCP {
   }
 
   async changeCetStatus(status, member = "auto") {
+    const cetdaily = await this.#guild.channels.cache.get(process.env.cetdaily);
+    const cetdailyarray = await cetdaily.messages.fetch();
+    if (
+      cetdailyarray.some(
+        (message) => message.content === `${this.id}|${member}`
+      )
+    )
+      return 429;
     const messagelog = await this.getCETInfo();
     if (!messagelog) throw Error("This SCP doesn't have any cet setup");
     const botlog = await this.#guild.channels.cache.get(process.env.cetlogs);
-    const embedlog = await this.#guild.channels.cache.get(
-      process.env.cetembedlogs
-    );
+    let embedlog = null;
+    if (this.containmentClass === "Safe") {
+      embedlog = await this.#guild.channels.cache.get(
+        process.env.cetembedlogssafe
+      );
+    } else if (this.containmentClass === "Euclide") {
+      embedlog = await this.#guild.channels.cache.get(
+        process.env.cetembedlogseuclide
+      );
+    } else if (this.containmentClass === "Keter") {
+      embedlog = await this.#guild.channels.cache.get(
+        process.env.cetembedlogsketer
+      );
+    }
     const embedmessagearray = await embedlog.messages.fetch();
-    const embedmessage = await embedmessagearray.find((message) => {
-      if (message?.embeds[0]) {
-        const { value } = message.embeds[0].fields[0];
-        const id = splitEmbed(value).Objet;
-        return id === this.id;
-      }
-      return null;
-    });
+    const embedmessage = await embedmessagearray.find(
+      (message) => message.content === `SCP-${this.id}`
+    );
     const time =
       member === "auto"
         ? messagelog.get("Timestamp")
@@ -187,6 +201,13 @@ class SCP {
     await messagelog.get("Message").delete();
     const operator = member === "auto" ? messagelog.get("Opérateur") : member;
     await botlog.send(`${this.id}|${operator}|${time}|${status}`);
+    if (member) {
+      await cetdaily.send(`${this.id}|${operator}`);
+      const cetweekly = await this.#guild.channels.cache.get(
+        process.env.cetweeklog
+      );
+      cetweekly.send(`${this.id}|${operator}`);
+    }
     let embed = EmbedBuilder.from(embedmessage.embeds[0]);
     let button = null;
     if (status === "operational") {
@@ -205,7 +226,6 @@ class SCP {
             .setCustomId("cetdone")
             .setLabel("✅ Effectué")
             .setStyle(ButtonStyle.Success)
-            .setDisabled(true)
         )
         .addComponents(
           new ButtonBuilder()

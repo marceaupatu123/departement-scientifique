@@ -12,7 +12,7 @@ module.exports = {
   async execute(interaction) {
     if (!CheckSuperviseur(interaction.member))
       return interaction.reply({ content: NotAllowed, ephemeral: true });
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
     const botlog = await interaction.guild.channels.cache.get(
       process.env.SalonBlamelogs
     );
@@ -114,7 +114,6 @@ module.exports = {
     }
     return interaction.editReply({
       content: "",
-      ephemeral: true,
       embeds: embed,
     });
   },
