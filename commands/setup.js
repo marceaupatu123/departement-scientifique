@@ -57,6 +57,12 @@ module.exports = {
           .setCustomId("maintenance")
           .setLabel("⚒️ Mode Maintenance")
           .setStyle(ButtonStyle.Primary)
+      )
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId("spawncetall")
+          .setLabel("🟢 Spawn CET")
+          .setStyle(ButtonStyle.Primary)
       );
 
     const ConfigEmbed = new EmbedBuilder()

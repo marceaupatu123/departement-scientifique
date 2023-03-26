@@ -169,25 +169,31 @@ class SCP {
     const cetdailyarray = await cetdaily.messages.fetch();
     if (
       cetdailyarray.some(
-        (message) => message.content.split("|")[1] === `${member}`
+        (message) => message.content === `${this.id}|${member}`
       )
     )
       return 429;
     const messagelog = await this.getCETInfo();
     if (!messagelog) throw Error("This SCP doesn't have any cet setup");
     const botlog = await this.#guild.channels.cache.get(process.env.cetlogs);
-    const embedlog = await this.#guild.channels.cache.get(
-      process.env.cetembedlogs
-    );
+    let embedlog = null;
+    if (this.containmentClass === "Safe") {
+      embedlog = await this.#guild.channels.cache.get(
+        process.env.cetembedlogssafe
+      );
+    } else if (this.containmentClass === "Euclide") {
+      embedlog = await this.#guild.channels.cache.get(
+        process.env.cetembedlogseuclide
+      );
+    } else if (this.containmentClass === "Keter") {
+      embedlog = await this.#guild.channels.cache.get(
+        process.env.cetembedlogsketer
+      );
+    }
     const embedmessagearray = await embedlog.messages.fetch();
-    const embedmessage = await embedmessagearray.find((message) => {
-      if (message?.embeds[0]) {
-        const { value } = message.embeds[0].fields[0];
-        const id = splitEmbed(value).Objet;
-        return id === this.id;
-      }
-      return null;
-    });
+    const embedmessage = await embedmessagearray.find(
+      (message) => message.content === `SCP-${this.id}`
+    );
     const time =
       member === "auto"
         ? messagelog.get("Timestamp")

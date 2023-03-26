@@ -13,7 +13,10 @@ const { NotAllowed, Allowed } = require("../json/messages.json");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("spawncetall")
-    .setDescription("Fais spawn le cet d'un scp"),
+    .setDescription("Fais spawn le cet d'un scp")
+    .addStringOption((option) =>
+      option.setName("classe").setDescription("Classe du SCP").setRequired(true)
+    ),
   async execute(interaction) {
     const botlog = await interaction.guild.channels.cache.get(
       process.env.cetlogs
@@ -29,7 +32,11 @@ module.exports = {
     await Promise.all(
       scplogs.map(async (element) => {
         const scpnumber = element.content.split("|")[0];
-        if (element.content.split("|")[1] !== "Euclide") return;
+        if (
+          element.content.split("|")[1] !==
+          interaction.options.getString("classe")
+        )
+          return;
         const thescp = await SCP.fetchSCP(interaction.client, scpnumber);
         const time = Math.floor(Date.now() / 1000);
         console.log(thescp.id);

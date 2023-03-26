@@ -58,6 +58,10 @@ module.exports = {
           .setLabel("⚠️ Signaler un Incident")
           .setStyle(ButtonStyle.Danger)
       );
-    interaction.reply({ content: "", embeds: [embed], components: [row] });
+    interaction.reply({
+      content: `SCP-${thescp.id}`,
+      embeds: [embed],
+      components: [row],
+    });
   },
 };
