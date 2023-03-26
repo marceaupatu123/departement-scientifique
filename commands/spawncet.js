@@ -13,7 +13,7 @@ const { NotAllowed } = require("../json/messages.json");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("spawncet")
-    .setDescription("Affiche tout les blâmes actifs du serveur")
+    .setDescription("Fais spawn le cet d'un scp")
     .addNumberOption((option) =>
       option.setName("numero").setDescription("Numéro du SCP").setRequired(true)
     ),
@@ -51,7 +51,6 @@ module.exports = {
           .setCustomId("cetdone")
           .setLabel("✅ Effectué")
           .setStyle(ButtonStyle.Success)
-          .setDisabled(true)
       )
       .addComponents(
         new ButtonBuilder()

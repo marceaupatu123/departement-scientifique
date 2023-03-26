@@ -6,7 +6,6 @@ module.exports = {
   name: Events.ClientReady,
   once: true,
   async execute(client) {
-    console.log(`Ready! Logged in as ${client.user.tag}`);
     client.user.setStatus("online");
     client.user.setActivity("Les Gacha du Dr Dominus", {
       type: ActivityType.Watching,
@@ -36,6 +35,18 @@ module.exports = {
     const cetlogs = await client.guilds.cache
       .get(process.env.guildId)
       .channels.cache.get(process.env.cetlogs);
+    const cetdaily = await client.guilds.cache
+      .get(process.env.guildId)
+      .channels.cache.get(process.env.cetdaily);
+    const cetdailyarray = await cetdaily.messages.fetch();
+    const cetweekly = await client.guilds.cache
+      .get(process.env.guildId)
+      .channels.cache.get(process.env.cetweeklog);
+    const cetweeklyarray = await cetweekly.messages.fetch();
+    await Promise.all(cetdailyarray.map((v) => v.delete()));
+    const today = new Date();
+    if (today.getDay === 1)
+      await Promise.all(cetweeklyarray.map((v) => v.delete()));
     const arraycet = await cetlogs.messages.fetch();
     const promise = arraycet.map(async (v) => {
       const infos = v.content.split("|");
@@ -58,5 +69,6 @@ module.exports = {
       }
     });
     await Promise.all(promise);
+    console.log(`Ready! Logged in as ${client.user.tag}`);
   },
 };

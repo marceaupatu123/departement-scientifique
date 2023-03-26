@@ -2,5 +2,6 @@
   "NotAllowed": "Tu n'as pas le droit d'effectuer cette action ❌",
   "Allowed": "Modification effectuée avec succès ✅",
   "Delais": "Vous avez dépassé le delais, opération annulée ⌛",
-  "DateIncorrecte": "La date que vous avez fournit est incorrect, veuillez réessayer 🤷‍♀️"
+  "DateIncorrecte": "La date que vous avez fournit est incorrect, veuillez réessayer 🤷‍♀️",
+  "TooManyCET": "Tu n'as le droit qu'à un seul CET par jour ⚠️"
 }

@@ -1,7 +1,7 @@
 const { Events } = require("discord.js");
 const { splitEmbed } = require("../functions/database");
 const { SCP } = require("../functions/scp");
-const { Allowed } = require("../json/messages.json");
+const { Allowed, TooManyCET } = require("../json/messages.json");
 const { menucetincident } = require("../selectmenu/cet");
 
 module.exports = {
@@ -18,7 +18,14 @@ module.exports = {
     ).Objet;
     const thescp = await SCP.fetchSCP(button.client, SCPNumber);
     if (button.customId === "cetdone") {
-      await thescp.changeCetStatus("operational", button.member);
+      const cetstatus = await thescp.changeCetStatus(
+        "operational",
+        button.member
+      );
+      if (cetstatus === 429) {
+        await button.reply({ content: TooManyCET, ephemeral: true });
+        return;
+      }
       await button.deferReply({ ephemeral: true });
     }
     if (button.customId === "incident") {

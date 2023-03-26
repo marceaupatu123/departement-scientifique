@@ -165,6 +165,14 @@ class SCP {
   }
 
   async changeCetStatus(status, member = "auto") {
+    const cetdaily = await this.#guild.channels.cache.get(process.env.cetdaily);
+    const cetdailyarray = await cetdaily.messages.fetch();
+    if (
+      cetdailyarray.some(
+        (message) => message.content.split("|")[1] === `${member}`
+      )
+    )
+      return 429;
     const messagelog = await this.getCETInfo();
     if (!messagelog) throw Error("This SCP doesn't have any cet setup");
     const botlog = await this.#guild.channels.cache.get(process.env.cetlogs);
@@ -187,6 +195,13 @@ class SCP {
     await messagelog.get("Message").delete();
     const operator = member === "auto" ? messagelog.get("Opérateur") : member;
     await botlog.send(`${this.id}|${operator}|${time}|${status}`);
+    if (member) {
+      await cetdaily.send(`${this.id}|${operator}`);
+      const cetweekly = await this.#guild.channels.cache.get(
+        process.env.cetweeklog
+      );
+      cetweekly.send(`${this.id}|${operator}`);
+    }
     let embed = EmbedBuilder.from(embedmessage.embeds[0]);
     let button = null;
     if (status === "operational") {
@@ -205,7 +220,6 @@ class SCP {
             .setCustomId("cetdone")
             .setLabel("✅ Effectué")
             .setStyle(ButtonStyle.Success)
-            .setDisabled(true)
         )
         .addComponents(
           new ButtonBuilder()
