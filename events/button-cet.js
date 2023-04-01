@@ -17,19 +17,19 @@ module.exports = {
       button.message.embeds[0].fields[0].value
     ).Objet;
     const thescp = await SCP.fetchSCP(button.client, SCPNumber);
+    await button.deferReply({ ephemeral: true });
     if (button.customId === "cetdone") {
       const cetstatus = await thescp.changeCetStatus(
         "operational",
         button.member
       );
       if (cetstatus === 429) {
-        await button.reply({ content: TooManyCET, ephemeral: true });
+        await button.editReply({ content: TooManyCET, ephemeral: true });
         return;
       }
-      await button.deferReply({ ephemeral: true });
     }
     if (button.customId === "incident") {
-      const replyfirst = await button.reply({
+      const replyfirst = await button.editReply({
         content: "Selectionnez votre Incident",
         components: [menucetincident],
         ephemeral: true,
