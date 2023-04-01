@@ -60,7 +60,15 @@ module.exports = {
     await checkPermission("SendMessages", process.env.SCPDB);
     await checkPermission("ViewChannel", process.env.cetlogs);
     await checkPermission("SendMessages", process.env.cetlogs);
-    await checkPermission("ViewChannel", process.env.cetembedlogs);
-    await checkPermission("SendMessages", process.env.cetembedlogs);
+    await checkPermission("ViewChannel", process.env.cetembedlogssafe);
+    await checkPermission("SendMessages", process.env.cetembedlogssafe);
+    await checkPermission("ViewChannel", process.env.cetembedlogsketer);
+    await checkPermission("SendMessages", process.env.cetembedlogsketer);
+    await checkPermission("ViewChannel", process.env.cetembedlogseuclide);
+    await checkPermission("SendMessages", process.env.cetembedlogseuclide);
+    await checkPermission("ViewChannel", process.env.cetdaily);
+    await checkPermission("SendMessages", process.env.cetdaily);
+    await checkPermission("ViewChannel", process.env.cetweeklog);
+    await checkPermission("SendMessages", process.env.cetweeklog);
   },
 };

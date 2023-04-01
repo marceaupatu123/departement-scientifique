@@ -6,9 +6,9 @@ module.exports = {
   name: Events.ClientReady,
   once: true,
   async execute(client) {
-    client.user.setStatus("online");
-    client.user.setActivity("Les Gacha du Dr Dominus", {
-      type: ActivityType.Watching,
+    client.user.setStatus("idle");
+    client.user.setActivity("Démarrage du Bot", {
+      type: ActivityType.Streaming,
     });
     /**
      * Check des absences
@@ -64,15 +64,19 @@ module.exports = {
           return;
         const DateNow = Date.now() / 1000;
         const thescp = await SCP.fetchSCP(client, infos[0]);
-        if (DateNow - infos[2] >= 115200) {
+        if (DateNow - infos[2] >= 115200 && infos[3] === "needcheck") {
           // 32 heures de delais
           await thescp.changeCetStatus("needcheckpriority");
-        } else if (DateNow - infos[2] >= 57600) {
+        } else if (DateNow - infos[2] >= 57600 && infos[3] === "operational") {
           // 16 heures de delais
           await thescp.changeCetStatus("needcheck");
         }
       })
     );
     console.log(`Ready! Logged in as ${client.user.tag}`);
+    client.user.setStatus("online");
+    client.user.setActivity("Les Gacha du Dr Dominus", {
+      type: ActivityType.Watching,
+    });
   },
 };

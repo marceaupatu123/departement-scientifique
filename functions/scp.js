@@ -5,8 +5,6 @@ const {
   ButtonStyle,
   ButtonBuilder,
 } = require("discord.js");
-const { splitEmbed } = require("./database");
-
 /**
  * Une classe représentant un SCP (Secure, Contain, Protect).
  *
@@ -175,7 +173,6 @@ class SCP {
       return 429;
     const messagelog = await this.getCETInfo();
     if (!messagelog) throw Error("This SCP doesn't have any cet setup");
-    const botlog = await this.#guild.channels.cache.get(process.env.cetlogs);
     let embedlog = null;
     if (this.containmentClass === "Safe") {
       embedlog = await this.#guild.channels.cache.get(
@@ -198,10 +195,10 @@ class SCP {
       member === "auto"
         ? messagelog.get("Timestamp")
         : Math.floor(Date.now() / 1000);
-    await messagelog.get("Message").delete();
+    const messagetoedit = await messagelog.get("Message");
     const operator = member === "auto" ? messagelog.get("Opérateur") : member;
-    await botlog.send(`${this.id}|${operator}|${time}|${status}`);
-    if (member) {
+    await messagetoedit.edit(`${this.id}|${operator}|${time}|${status}`);
+    if (member !== "auto") {
       await cetdaily.send(`${this.id}|${operator}`);
       const cetweekly = await this.#guild.channels.cache.get(
         process.env.cetweeklog
