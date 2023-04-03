@@ -47,7 +47,7 @@ module.exports = {
     const cetweeklyarray = await cetweekly.messages.fetch();
     await Promise.all(cetdailyarray.map((v) => v.delete()));
     const today = new Date();
-    if (today.getDay === 1)
+    if (today.getDay() === 1)
       await Promise.all(cetweeklyarray.map((v) => v.delete()));
     console.log("Check des CET");
     const arraycet = await cetlogs.messages.fetch();
