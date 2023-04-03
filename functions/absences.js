@@ -20,11 +20,15 @@ async function RemoveAbsence(member) {
     process.env.SalonAbsenceEmbed
   );
   const arrayembed = await embedlog.messages.fetch();
-  const mentioned2 = arrayembed.find(
-    (message) =>
-      message?.embeds[0].fields[0].value.includes(`${member}`) === true
-  );
-  mentioned2.delete();
+  try {
+    const mentioned2 = arrayembed.find(
+      (message) =>
+        message?.embeds[0].fields[0].value.includes(`${member}`) === true
+    );
+    mentioned2.delete();
+  } catch (e) {
+    console.log(e);
+  }
   return true;
 }
 
