@@ -14,22 +14,22 @@ module.exports = {
      * Check des absences
      */
     console.log("Check des Absences");
-    const guild = client.guilds.cache.get(process.env.guildId);
-    const members = await guild.members.fetch();
     const absencelog = client.guilds.cache
       .get(process.env.guildId)
       .channels.cache.get(process.env.SalonAbsenceLogs);
     const arrayabsence = await absencelog.messages.fetch();
-    arrayabsence.forEach((v) => {
-      const infos = v.content.split("|");
-      const DateNow = Date.now() / 1000;
-      if (infos[2] - DateNow < 0) {
-        const memberId = v.mentions.users.first().id;
-        const member = members.get(memberId);
-        if (!member) return;
-        RemoveAbsence(member);
-      }
-    });
+    await Promise.all(
+      arrayabsence.map(async (v) => {
+        const infos = v.content.split("|");
+        const DateNow = Date.now() / 1000;
+        if (infos[2] - DateNow < 0) {
+          const member = await v.mentions.users.first();
+          if (!member) return;
+          await RemoveAbsence(client, member);
+        }
+      })
+    );
+
     /**
      * Check des CET
      */
